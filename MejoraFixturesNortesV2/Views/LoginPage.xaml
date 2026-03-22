@@ -1,80 +1,81 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="MejoraFixturesNortesV2.Views.LoginPage"
     BackgroundColor="#0D3B66">
 
     <Grid>
 
-        <!-- CONTENEDOR CENTRAL -->
+        <!--  CONTENEDOR CENTRAL  -->
         <VerticalStackLayout
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
             Padding="20"
-            MaximumWidthRequest="420">
+            HorizontalOptions="Center"
+            MaximumWidthRequest="420"
+            VerticalOptions="Center">
 
-            <!-- TARJETA -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="20"
-                   Padding="30"
-                   HasShadow="True">
+            <!--  TARJETA  -->
+            <Frame
+                Padding="30"
+                BackgroundColor="White"
+                CornerRadius="20"
+                HasShadow="True">
 
                 <VerticalStackLayout Spacing="18">
 
-                    <Image Source="safefixx.jpg"
-                           HeightRequest="120"
-                           HorizontalOptions="Center"/>
+                    <Image
+                        HeightRequest="120"
+                        HorizontalOptions="Center"
+                        Source="safefixx.jpg" />
 
-                    <Label Text="Inicio de sesión"
-                           FontSize="26"
-                           FontAttributes="Bold"
-                           TextColor="#0D3B66"
-                           HorizontalOptions="Center"/>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="26"
+                        HorizontalOptions="Center"
+                        Text="Inicio de sesión"
+                        TextColor="#0D3B66" />
 
-                    <Frame BackgroundColor="#F4F6F8"
-                           CornerRadius="12"
-                           Padding="10">
+                    <Frame
+                        Padding="10"
+                        BackgroundColor="#F4F6F8"
+                        CornerRadius="12">
 
-                        <Label Text="Acceda con su usuario corporativo. Recuerde que la contraseña temporal es válida una vez."
-                               FontSize="12"
-                               TextColor="Gray"/>
+                        <Label
+                            FontSize="12"
+                            Text="Acceda con su usuario corporativo. Recuerde que la contraseña temporal es válida una vez."
+                            TextColor="Gray" />
                     </Frame>
 
-                    <Entry x:Name="UsuarioEntry"
-                           Placeholder="FN-Empleado"
-                           BackgroundColor="#F2F2F2"
-                           TextColor="Black"/>
+                    <Entry
+                        x:Name="UsuarioEntry"
+                        BackgroundColor="#F2F2F2"
+                        Placeholder="FN-Empleado"
+                        TextColor="Black" />
 
-                    <Grid ColumnDefinitions="*,40">
+                    <Entry
+                        x:Name="PasswordEntry"
+                        BackgroundColor="#F2F2F2"
+                        IsPassword="True"
+                        Placeholder="Contraseña"
+                        TextColor="Black" />
 
-                        <Entry x:Name="PasswordEntry"
-                               Placeholder="Contraseña"
-                               IsPassword="True"
-                               BackgroundColor="#F2F2F2"
-                               TextColor="Black"/>
+                    <Button
+                        BackgroundColor="#0D3B66"
+                        Clicked="OnLoginClicked"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Text="Ingresar"
+                        TextColor="White" />
 
-                        <ImageButton Grid.Column="1"
-                                     Source="novisible.png"
-                                     Clicked="OnTogglePassword"
-                                     BackgroundColor="Transparent"/>
-                    </Grid>
-
-                    <Button Text="Ingresar"
-                            BackgroundColor="#0D3B66"
-                            TextColor="White"
-                            CornerRadius="12"
-                            HeightRequest="50"
-                            Clicked="OnLoginClicked"/>
-
-                    <Button Text="Cambiar contraseña temporal"
-                            BackgroundColor="White"
-                            TextColor="#0D3B66"
-                            BorderColor="#0D3B66"
-                            BorderWidth="2"
-                            CornerRadius="12"
-                            HeightRequest="50"
-                            Clicked="OnCambiarPassword"/>
+                    <Button
+                        BackgroundColor="White"
+                        BorderColor="#0D3B66"
+                        BorderWidth="2"
+                        Clicked="OnCambiarPassword"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Text="Cambiar contraseña temporal"
+                        TextColor="#0D3B66" />
 
                 </VerticalStackLayout>
 
@@ -83,44 +84,49 @@
         </VerticalStackLayout>
 
 
-        <!-- BOTON AUDITOR (SUPERIOR DERECHO) -->
+        <!--  BOTON AUDITOR (SUPERIOR DERECHO)  -->
         <Grid
-            HorizontalOptions="End"
-            VerticalOptions="Start"
             Margin="10"
-            ColumnDefinitions="70,Auto">
+            ColumnDefinitions="70,Auto"
+            HorizontalOptions="End"
+            VerticalOptions="Start">
 
-            <ImageButton Source="lupaa.png"
-                         WidthRequest="70"
-                         HeightRequest="70"
-                         BackgroundColor="#E5E5E5"
-                         CornerRadius="35"
-                         Clicked="AbrirGraficos_Clicked">
+            <ImageButton
+                BackgroundColor="#E5E5E5"
+                Clicked="AbrirGraficos_Clicked"
+                CornerRadius="35"
+                HeightRequest="70"
+                Source="lupaa.png"
+                WidthRequest="70">
 
                 <ImageButton.Shadow>
-                    <Shadow Brush="#0D3B66"
-                            Offset="4,4"
-                            Radius="12"
-                            Opacity="0.7"/>
+                    <Shadow
+                        Brush="#0D3B66"
+                        Opacity="0.7"
+                        Radius="12"
+                        Offset="4,4" />
                 </ImageButton.Shadow>
 
             </ImageButton>
 
-            <Frame Grid.Column="1"
-                   BackgroundColor="#E5E5E5"
-                   CornerRadius="18"
-                   Padding="12"
-                   Margin="10,15,0,0">
+            <Frame
+                Grid.Column="1"
+                Margin="10,15,0,0"
+                Padding="12"
+                BackgroundColor="#E5E5E5"
+                CornerRadius="18">
 
                 <VerticalStackLayout>
 
-                    <Label Text="¿Eres auditor?"
-                           FontAttributes="Bold"
-                           TextColor="#0D3B66"/>
+                    <Label
+                        FontAttributes="Bold"
+                        Text="¿Eres auditor?"
+                        TextColor="#0D3B66" />
 
-                    <Label Text="Ver gráficos de auditoría"
-                           FontSize="12"
-                           TextColor="#0D3B66"/>
+                    <Label
+                        FontSize="12"
+                        Text="Ver gráficos de auditoría"
+                        TextColor="#0D3B66" />
 
                 </VerticalStackLayout>
 
