@@ -1,48 +1,55 @@
-﻿using MejoraFixturesNortesV2.Models;
+﻿using MejoraFixturesNortesV2.Data;
+using MejoraFixturesNortesV2.Models;
+using MejoraFixturesNortesV2.Services;
 
 namespace MejoraFixturesNortesV2.Views;
 
 public partial class PerfilPage : ContentPage
 {
+    readonly FixtureDatabase _db = null!;
 
     public PerfilPage()
     {
         InitializeComponent();
-
-        // 🔧 DATOS DE PRUEBA (puedes quitar después)
-        FixturesCollection.ItemsSource = new List<FixtureItem>
-        {
-            new FixtureItem
-            {
-                Serial = "FX-1002",
-                Proceso = "Nutplates",
-                Imagen = "fx1002.png"
-            }
-        };
-
-        CargarResumen();
+        _db = IPlatformApplication.Current!.Services.GetService<FixtureDatabase>()!;
     }
 
-    // 🔵 RESUMEN
-    void CargarResumen()
+    protected override async void OnAppearing()
     {
-        try
-        {
-            var lista = FixturesCollection.ItemsSource as IEnumerable<FixtureItem>;
+        base.OnAppearing();
 
-            int activos = lista != null ? lista.Count() : 0;
-            int pendientes = 0;
-
-            LblActivos.Text = $"🔧 {activos} fixtures activos";
-            LblPendientes.Text = $"⏳ {pendientes} pendientes";
-            LblUltimo.Text = $"🕒 Último movimiento: hoy";
-        }
-        catch
+        var usuario = SesionService.UsuarioActual;
+        if (usuario != null)
         {
-            LblActivos.Text = "🔧 0 fixtures activos";
-            LblPendientes.Text = "⏳ 0 pendientes";
-            LblUltimo.Text = "🕒 Sin información";
+            NombreLabel.Text = usuario.Nombre;
+            EmpleadoLabel.Text = usuario.NumeroEmpleado;
         }
+
+        await CargarFixturesAsync();
+    }
+
+    async Task CargarFixturesAsync()
+    {
+        var usuario = SesionService.UsuarioActual;
+        if (usuario == null) return;
+
+        List<FixtureItem> lista;
+
+        if (usuario.EsSupervisor)
+            lista = await _db.ObtenerTodasFixturesEnUsoAsync();
+        else
+            lista = await _db.ObtenerFixturesEnUsoDeUsuarioAsync(usuario.Nombre);
+
+        FixturesCollection.ItemsSource = lista;
+        CargarResumen(lista);
+    }
+
+    void CargarResumen(List<FixtureItem> lista)
+    {
+        int activos = lista?.Count ?? 0;
+        LblActivos.Text = $"🔧 {activos} fixtures activos";
+        LblPendientes.Text = $"⏳ 0 pendientes";
+        LblUltimo.Text = $"🕒 Último movimiento: hoy";
     }
 
     // 🔧 DEVOLVER

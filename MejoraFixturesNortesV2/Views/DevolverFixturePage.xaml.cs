@@ -1,46 +1,76 @@
+using MejoraFixturesNortesV2.Data;
 using MejoraFixturesNortesV2.Models;
+using MejoraFixturesNortesV2.Services;
 
 namespace MejoraFixturesNortesV2.Views;
 
 public partial class DevolverFixturePage : ContentPage
 {
     FixtureItem fixtureActual;
-
+    readonly FixtureDatabase _db;
     bool fotoTomada = false;
+    string fotoRuta = null;
 
-    // Constructor cuando se abre desde el men� principal
+    // Constructor cuando se abre desde el menú principal: carga fixtures del usuario logueado
     public DevolverFixturePage()
     {
         InitializeComponent();
-
-        CargarFixturesEnUso();
+        _db = IPlatformApplication.Current.Services.GetService<FixtureDatabase>();
+        CargarFixturesEnUsoAsync();
     }
+
     async void VolverButton_Clicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
-    // Constructor cuando se abre desde otra p�gina con una fixture espec�fica
+
+    // Constructor cuando se abre desde otra página con una fixture específica
     public DevolverFixturePage(FixtureItem fixture)
     {
         InitializeComponent();
-
+        _db = IPlatformApplication.Current.Services.GetService<FixtureDatabase>();
         fixtureActual = fixture;
-
         CargarFixture();
     }
 
-    void CargarFixturesEnUso()
+    async void CargarFixturesEnUsoAsync()
     {
-        // Simulaci�n temporal hasta conectar con API o BD
+        var usuario = SesionService.UsuarioActual;
+        if (usuario == null) return;
 
-        fixtureActual = new FixtureItem
+        List<FixtureItem> lista;
+
+        // Supervisores y admin ven todas las fixtures en uso
+        if (usuario.EsSupervisor)
+            lista = await _db.ObtenerTodasFixturesEnUsoAsync();
+        else
+            lista = await _db.ObtenerFixturesEnUsoDeUsuarioAsync(usuario.Nombre);
+
+        if (lista.Count == 0)
         {
-            Serial = "FX-1002",
-            Proceso = "Nutplates",
-            Responsable = "Juan P�rez",
-            Estado = "En uso"
-        };
+            await DisplayAlert("Sin fixtures", "No tienes fixtures en uso actualmente.", "OK");
+            await Navigation.PopAsync();
+            return;
+        }
 
+        // Si solo tiene una, la carga directo
+        if (lista.Count == 1)
+        {
+            fixtureActual = lista[0];
+            CargarFixture();
+            return;
+        }
+
+        // Si tiene varias, muestra un selector
+        var opciones = lista.Select(f => $"{f.Serial} — {f.Proceso}").ToArray();
+        string seleccion = await DisplayActionSheet("¿Qué fixture deseas devolver?", "Cancelar", null, opciones);
+        if (seleccion == null || seleccion == "Cancelar")
+        {
+            await Navigation.PopAsync();
+            return;
+        }
+
+        fixtureActual = lista[Array.IndexOf(opciones, seleccion)];
         CargarFixture();
     }
 
@@ -90,6 +120,7 @@ public partial class DevolverFixturePage : ContentPage
 
             if (foto != null)
             {
+                fotoRuta = await FixtureDatabase.GuardarFotoAsync(foto);
                 fotoTomada = true;
 
                 await DisplayAlert(
@@ -126,21 +157,32 @@ public partial class DevolverFixturePage : ContentPage
         if (!fotoTomada)
         {
             await DisplayAlert(
-                "Fotograf�a requerida",
-                "Debe tomar una fotograf�a de la fixture antes de devolverla.",
+                "Fotografía requerida",
+                "Debe tomar una fotografía de la fixture antes de devolverla.",
                 "OK");
-
             return;
         }
 
-        string observaciones = ObservacionesEntry.Text;
+        string observaciones = ObservacionesEntry?.Text;
 
-        // Aqu� ir� la llamada a BD o API
-        // Ejemplo futuro:
-        // await fixtureService.DevolverFixture(fixtureActual.Serial, observaciones);
+        // Registrar movimiento de devolución
+        await _db.RegistrarMovimientoAsync(new MovimientoFixture
+        {
+            FixtureSerial = fixtureActual.Serial,
+            Tipo = "Devolución",
+            Usuario = fixtureActual.Responsable,
+            Observaciones = observaciones,
+            FotoRuta = fotoRuta,
+            Fecha = DateTime.Now
+        });
+
+        // Liberar fixture
+        fixtureActual.Estado = "Disponible";
+        fixtureActual.Responsable = "Sin asignar";
+        await _db.GuardarAsync(fixtureActual);
 
         await DisplayAlert(
-            "Devoluci�n registrada",
+            "Devolución registrada",
             "La fixture fue devuelta correctamente.",
             "OK");
 

@@ -1,4 +1,6 @@
+using MejoraFixturesNortesV2.Data;
 using MejoraFixturesNortesV2.Models;
+using MejoraFixturesNortesV2.Services;
 
 namespace MejoraFixturesNortesV2.Views;
 
@@ -6,16 +8,22 @@ public partial class SolicitarFixturePage : ContentPage
 {
     string estadoFixture = "";
     bool fotoTomada = false;
+    string fotoRuta = null;
 
     FixtureItem fixtureActual;
+    readonly FixtureDatabase _db;
 
     public SolicitarFixturePage(FixtureItem fixture)
     {
         InitializeComponent();
-
+        _db = IPlatformApplication.Current.Services.GetService<FixtureDatabase>();
         fixtureActual = fixture;
-
         CargarFixtureDesdeCatalogo();
+
+        // Pre-llenar con el usuario de sesión para garantizar consistencia
+        var usuarioSesion = SesionService.UsuarioActual;
+        if (usuarioSesion != null)
+            UsuarioEntry.Text = usuarioSesion.Nombre;
     }
 
     void CargarFixtureDesdeCatalogo()
@@ -147,6 +155,7 @@ public partial class SolicitarFixturePage : ContentPage
 
             if (foto != null)
             {
+                fotoRuta = await FixtureDatabase.GuardarFotoAsync(foto);
                 fotoTomada = true;
 
                 await DisplayAlert(
@@ -182,21 +191,30 @@ public partial class SolicitarFixturePage : ContentPage
     {
         if (string.IsNullOrEmpty(UsuarioEntry.Text))
         {
-            await DisplayAlert(
-                "Error",
-                "Ingrese el nombre del usuario.",
-                "OK");
+            await DisplayAlert("Error", "Ingrese el nombre del usuario.", "OK");
             return;
         }
 
         if (!fotoTomada)
         {
-            await DisplayAlert(
-                "Error",
-                "Debe tomar una fotograf�a de evidencia.",
-                "OK");
+            await DisplayAlert("Error", "Debe tomar una fotografía de evidencia.", "OK");
             return;
         }
+
+        // Registrar movimiento de solicitud
+        await _db.RegistrarMovimientoAsync(new MovimientoFixture
+        {
+            FixtureSerial = fixtureActual.Serial,
+            Tipo = "Solicitud",
+            Usuario = UsuarioEntry.Text.Trim(),
+            FotoRuta = fotoRuta,
+            Fecha = DateTime.Now
+        });
+
+        // Actualizar estado del fixture a "En uso"
+        fixtureActual.Estado = "En uso";
+        fixtureActual.Responsable = UsuarioEntry.Text.Trim();
+        await _db.GuardarAsync(fixtureActual);
 
         await DisplayAlert(
             "Solicitud registrada",
