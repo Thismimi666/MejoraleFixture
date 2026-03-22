@@ -140,7 +140,10 @@ public partial class SolicitarFixturePage : ContentPage
 
         try
         {
-            var foto = await MediaPicker.CapturePhotoAsync();
+            var foto = await MediaPicker.Default.CapturePhotoAsync(new MediaPickerOptions
+            {
+                Title = "Tomar fotografía"
+            });
 
             if (foto != null)
             {
@@ -148,15 +151,29 @@ public partial class SolicitarFixturePage : ContentPage
 
                 await DisplayAlert(
                     "Foto capturada",
-                    "La fotograf�a fue tomada correctamente.",
+                    "La fotografía fue tomada correctamente.",
                     "OK");
             }
         }
-        catch
+        catch (FeatureNotSupportedException)
+        {
+            await DisplayAlert(
+                "No disponible",
+                "Este dispositivo no soporta la cámara.",
+                "OK");
+        }
+        catch (PermissionException)
+        {
+            await DisplayAlert(
+                "Permiso denegado",
+                "Se requiere permiso de cámara.",
+                "OK");
+        }
+        catch (Exception ex)
         {
             await DisplayAlert(
                 "Error",
-                "No fue posible acceder a la c�mara.",
+                $"No fue posible acceder a la cámara: {ex.Message}",
                 "OK");
         }
     }
