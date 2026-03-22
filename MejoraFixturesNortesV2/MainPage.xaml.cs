@@ -16,10 +16,6 @@ namespace MejoraFixturesNortesV2
             // Simulación de carga del sistema
             await Task.Delay(3000);
 
-            await DisplayAlert("Sistema listo",
-                               "SafeFix Control cargado correctamente.",
-                               "Continuar");
-
             Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
     }

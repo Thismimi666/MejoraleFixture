@@ -8,51 +8,82 @@
 
     <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
 
-        <!-- TITULO -->
-        <Label
-            Text="Solicitar Fixture"
-            FontSize="28"
-            FontAttributes="Bold"
-            TextColor="#0D3B66"
-            Margin="20,30,20,10"/>
+        <!--  TITULO  -->
+        <Grid Margin="10,30,20,10" ColumnDefinitions="Auto,*">
 
-        <!-- TARJETA FIXTURE -->
+            <Border
+                Padding="10,6"
+                Stroke="#0D3B66"
+                StrokeThickness="1.5"
+                VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VolverButton_Clicked" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="&#x2039;"
+                        TextColor="#0D3B66"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontSize="14"
+                        Text="Volver"
+                        TextColor="#0D3B66"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Label
+                Grid.Column="1"
+                Margin="12,0,0,0"
+                FontAttributes="Bold"
+                FontSize="28"
+                Text="Solicitar Fixture"
+                TextColor="#0D3B66"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <!--  TARJETA FIXTURE  -->
         <Frame
+            x:Name="FixtureCard"
             Grid.Row="1"
             Margin="20"
             Padding="20"
-            CornerRadius="15"
-            BorderColor="#E6E6E6"
             BackgroundColor="White"
-            IsVisible="False"
-            x:Name="FixtureCard">
+            BorderColor="#E6E6E6"
+            CornerRadius="15"
+            IsVisible="False">
 
             <Grid ColumnDefinitions="90,*">
 
                 <Image
-                    Source="fixture1.png"
                     HeightRequest="80"
-                    WidthRequest="80"/>
+                    Source="fixture1.png"
+                    WidthRequest="80" />
 
                 <VerticalStackLayout Grid.Column="1">
 
                     <Label
                         x:Name="SerialLabel"
-                        FontSize="22"
                         FontAttributes="Bold"
-                        TextColor="#0D3B66"/>
+                        FontSize="22"
+                        TextColor="#0D3B66" />
 
                     <Label
                         x:Name="ProcesoLabel"
                         FontSize="14"
-                        TextColor="Gray"/>
+                        TextColor="Gray" />
 
                     <Label
                         x:Name="EstadoLabel"
                         Padding="8,3"
                         FontSize="12"
-                        TextColor="White"
-                        HorizontalOptions="Start"/>
+                        HorizontalOptions="Start"
+                        TextColor="White" />
 
                 </VerticalStackLayout>
 
@@ -60,52 +91,52 @@
 
         </Frame>
 
-        <!-- BOTONES -->
+        <!--  BOTONES  -->
         <VerticalStackLayout
             Grid.Row="2"
             Margin="20"
             Spacing="15">
 
             <Button
-                Text="Escanear código"
-                ImageSource="elescaneo.png"
                 BackgroundColor="#0D3B66"
-                TextColor="White"
+                Clicked="EscanearCodigo"
                 CornerRadius="12"
                 HeightRequest="55"
-                Clicked="EscanearCodigo"/>
+                ImageSource="elescaneo.png"
+                Text="Escanear código"
+                TextColor="White" />
 
             <Button
-                Text="Tomar fotografía"
-                ImageSource="fotofix.png"
                 BackgroundColor="#0D3B66"
-                TextColor="White"
+                Clicked="TomarFoto"
                 CornerRadius="12"
                 HeightRequest="55"
-                Clicked="TomarFoto"/>
+                ImageSource="fotofix.png"
+                Text="Tomar fotografía"
+                TextColor="White" />
 
             <Entry
                 x:Name="UsuarioEntry"
-                Placeholder="Nombre del usuario"
                 BackgroundColor="#F4F4F4"
-                TextColor="#0D3B66"/>
+                Placeholder="Nombre del usuario"
+                TextColor="#0D3B66" />
 
         </VerticalStackLayout>
 
-        <!-- CONFIRMAR -->
+        <!--  CONFIRMAR  -->
         <Button
-            Grid.Row="3"
-            Text="Confirmar solicitud"
-            BackgroundColor="#2E7D32"
-            TextColor="White"
-            Margin="20"
-            HeightRequest="55"
-            CornerRadius="12"
-            IsEnabled="False"
             x:Name="ConfirmarButton"
-            Clicked="ConfirmarSolicitud"/>
+            Grid.Row="3"
+            Margin="20"
+            BackgroundColor="#2E7D32"
+            Clicked="ConfirmarSolicitud"
+            CornerRadius="12"
+            HeightRequest="55"
+            IsEnabled="False"
+            Text="Confirmar solicitud"
+            TextColor="White" />
 
-        <!-- MENSAJE WINDOWS -->
+        <!--  MENSAJE WINDOWS  -->
         <Frame
             Grid.Row="4"
             Margin="20"
@@ -115,14 +146,12 @@
 
             <HorizontalStackLayout Spacing="10">
 
-                <Image
-                    Source="emergency.png"
-                    HeightRequest="25"/>
+                <Image HeightRequest="25" Source="emergency.png" />
 
                 <Label
                     Text="El escaneo y la fotografía sólo están disponibles en dispositivos Android."
-                    VerticalOptions="Center"
-                    TextColor="#333"/>
+                    TextColor="#333"
+                    VerticalOptions="Center" />
 
             </HorizontalStackLayout>
 

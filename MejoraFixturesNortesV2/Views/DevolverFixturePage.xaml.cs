@@ -8,15 +8,18 @@ public partial class DevolverFixturePage : ContentPage
 
     bool fotoTomada = false;
 
-    // Constructor cuando se abre desde el menú principal
+    // Constructor cuando se abre desde el menï¿½ principal
     public DevolverFixturePage()
     {
         InitializeComponent();
 
         CargarFixturesEnUso();
     }
-
-    // Constructor cuando se abre desde otra página con una fixture específica
+    async void VolverButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+    // Constructor cuando se abre desde otra pï¿½gina con una fixture especï¿½fica
     public DevolverFixturePage(FixtureItem fixture)
     {
         InitializeComponent();
@@ -28,13 +31,13 @@ public partial class DevolverFixturePage : ContentPage
 
     void CargarFixturesEnUso()
     {
-        // Simulación temporal hasta conectar con API o BD
+        // Simulaciï¿½n temporal hasta conectar con API o BD
 
         fixtureActual = new FixtureItem
         {
             Serial = "FX-1002",
             Proceso = "Nutplates",
-            Responsable = "Juan Pérez",
+            Responsable = "Juan Pï¿½rez",
             Estado = "En uso"
         };
 
@@ -60,14 +63,23 @@ public partial class DevolverFixturePage : ContentPage
 
     async void TomarFoto(object sender, EventArgs e)
     {
-
 #if WINDOWS
         await DisplayAlert(
-            "Cámara",
-            "La cámara solo funciona en dispositivos móviles.",
+            "CÃ¡mara",
+            "La cÃ¡mara solo funciona en dispositivos mÃ³viles.",
             "OK");
         return;
 #endif
+
+        var status = await Permissions.RequestAsync<Permissions.Camera>();
+        if (status != PermissionStatus.Granted)
+        {
+            await DisplayAlert(
+                "Permiso requerido",
+                "Se necesita permiso de cÃ¡mara para tomar la fotografÃ­a.",
+                "OK");
+            return;
+        }
 
         try
         {
@@ -78,7 +90,7 @@ public partial class DevolverFixturePage : ContentPage
                 fotoTomada = true;
 
                 await DisplayAlert(
-                    "Fotografía capturada",
+                    "Fotografï¿½a capturada",
                     "La evidencia fue tomada correctamente.",
                     "OK");
             }
@@ -87,7 +99,7 @@ public partial class DevolverFixturePage : ContentPage
         {
             await DisplayAlert(
                 "Error",
-                "No fue posible abrir la cámara.",
+                "No fue posible abrir la cï¿½mara.",
                 "OK");
         }
     }
@@ -97,8 +109,8 @@ public partial class DevolverFixturePage : ContentPage
         if (!fotoTomada)
         {
             await DisplayAlert(
-                "Fotografía requerida",
-                "Debe tomar una fotografía de la fixture antes de devolverla.",
+                "Fotografï¿½a requerida",
+                "Debe tomar una fotografï¿½a de la fixture antes de devolverla.",
                 "OK");
 
             return;
@@ -106,12 +118,12 @@ public partial class DevolverFixturePage : ContentPage
 
         string observaciones = ObservacionesEntry.Text;
 
-        // Aquí irá la llamada a BD o API
+        // Aquï¿½ irï¿½ la llamada a BD o API
         // Ejemplo futuro:
         // await fixtureService.DevolverFixture(fixtureActual.Serial, observaciones);
 
         await DisplayAlert(
-            "Devolución registrada",
+            "Devoluciï¿½n registrada",
             "La fixture fue devuelta correctamente.",
             "OK");
 

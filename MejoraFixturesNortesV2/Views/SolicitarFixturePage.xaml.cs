@@ -47,29 +47,34 @@ public partial class SolicitarFixturePage : ContentPage
                 "Esta fixture se encuentra actualmente en uso.",
                 "OK");
         }
-        else if (estadoFixture == "Dañada")
+        else if (estadoFixture == "Daï¿½ada")
         {
             EstadoLabel.BackgroundColor = Color.FromArgb("#C62828");
             ConfirmarButton.IsEnabled = false;
 
             DisplayAlert(
                 "Fixture no disponible",
-                "La fixture está dañada.",
+                "La fixture estï¿½ daï¿½ada.",
                 "OK");
         }
+    }
+
+    async void VolverButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 
     async void EscanearCodigo(object sender, EventArgs e)
     {
 #if WINDOWS
         await DisplayAlert(
-            "Escáner",
-            "El escaneo solo está disponible en Android.",
+            "Escï¿½ner",
+            "El escaneo solo estï¿½ disponible en Android.",
             "OK");
         return;
 #endif
 
-        // Simulación de escaneo
+        // Simulaciï¿½n de escaneo
         string codigo = "FX-1001";
 
         CargarFixture(codigo);
@@ -101,14 +106,14 @@ public partial class SolicitarFixturePage : ContentPage
                 "Esta fixture se encuentra actualmente en uso.",
                 "OK");
         }
-        else if (estadoFixture == "Dañada")
+        else if (estadoFixture == "Daï¿½ada")
         {
             EstadoLabel.BackgroundColor = Color.FromArgb("#C62828");
             ConfirmarButton.IsEnabled = false;
 
             DisplayAlert(
                 "Fixture no disponible",
-                "La fixture está dañada.",
+                "La fixture estï¿½ daï¿½ada.",
                 "OK");
         }
     }
@@ -117,11 +122,21 @@ public partial class SolicitarFixturePage : ContentPage
     {
 #if WINDOWS
         await DisplayAlert(
-            "Cámara",
-            "La cámara solo está disponible en Android.",
+            "CÃ¡mara",
+            "La cÃ¡mara solo estÃ¡ disponible en Android.",
             "OK");
         return;
 #endif
+
+        var status = await Permissions.RequestAsync<Permissions.Camera>();
+        if (status != PermissionStatus.Granted)
+        {
+            await DisplayAlert(
+                "Permiso requerido",
+                "Se necesita permiso de cÃ¡mara para tomar la fotografÃ­a.",
+                "OK");
+            return;
+        }
 
         try
         {
@@ -133,7 +148,7 @@ public partial class SolicitarFixturePage : ContentPage
 
                 await DisplayAlert(
                     "Foto capturada",
-                    "La fotografía fue tomada correctamente.",
+                    "La fotografï¿½a fue tomada correctamente.",
                     "OK");
             }
         }
@@ -141,7 +156,7 @@ public partial class SolicitarFixturePage : ContentPage
         {
             await DisplayAlert(
                 "Error",
-                "No fue posible acceder a la cámara.",
+                "No fue posible acceder a la cï¿½mara.",
                 "OK");
         }
     }
@@ -161,7 +176,7 @@ public partial class SolicitarFixturePage : ContentPage
         {
             await DisplayAlert(
                 "Error",
-                "Debe tomar una fotografía de evidencia.",
+                "Debe tomar una fotografï¿½a de evidencia.",
                 "OK");
             return;
         }

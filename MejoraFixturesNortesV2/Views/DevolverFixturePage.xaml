@@ -11,61 +11,90 @@
 
         <VerticalStackLayout Padding="25" Spacing="20">
 
-            <!-- TITULO -->
-            <Label
-                Text="Mis Fixtures en uso"
-                FontSize="26"
-                FontAttributes="Bold"
-                TextColor="#0D3B66"/>
+            <!--  TITULO  -->
+            <Grid Margin="10,30,20,10" ColumnDefinitions="Auto,*">
 
-            <!-- TARJETA FIXTURE -->
+                <Border
+                    Padding="10,6"
+                    Stroke="#0D3B66"
+                    StrokeThickness="1.5"
+                    VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="VolverButton_Clicked" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="4">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="&#x2039;"
+                            TextColor="#0D3B66"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontSize="14"
+                            Text="Volver"
+                            TextColor="#0D3B66"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="26"
+                    Text="Mis Fixtures en uso"
+                    TextColor="#0D3B66" />
+            </Grid>
+
+            <!--  TARJETA FIXTURE  -->
             <Frame
                 x:Name="FixtureCard"
-                CornerRadius="18"
                 Padding="20"
                 BackgroundColor="White"
                 BorderColor="#E5E5E5"
+                CornerRadius="18"
                 HasShadow="True">
 
                 <Grid ColumnDefinitions="90,*">
 
-                    <!-- IMAGEN -->
+                    <!--  IMAGEN  -->
                     <Image
-                        Source="fixture1.png"
                         HeightRequest="80"
-                        WidthRequest="80"/>
+                        Source="fixture1.png"
+                        WidthRequest="80" />
 
-                    <!-- INFORMACION -->
+                    <!--  INFORMACION  -->
                     <VerticalStackLayout Grid.Column="1" Spacing="5">
 
                         <Label
-                            Text="Serial"
                             FontSize="13"
-                            TextColor="Gray"/>
+                            Text="Serial"
+                            TextColor="Gray" />
 
                         <Label
                             x:Name="SerialLabel"
-                            FontSize="20"
                             FontAttributes="Bold"
-                            TextColor="#0D3B66"/>
+                            FontSize="20"
+                            TextColor="#0D3B66" />
 
                         <Label
                             x:Name="ProcesoLabel"
                             FontSize="14"
-                            TextColor="Gray"/>
+                            TextColor="Gray" />
 
-                        <!-- ESTADO -->
+                        <!--  ESTADO  -->
                         <Label
                             x:Name="EstadoLabel"
                             Padding="8,3"
-                            TextColor="White"
                             FontSize="12"
-                            HorizontalOptions="Start"/>
+                            HorizontalOptions="Start"
+                            TextColor="White" />
 
                         <Label
                             x:Name="ResponsableLabel"
                             FontSize="14"
-                            TextColor="#0D3B66"/>
+                            TextColor="#0D3B66" />
 
                     </VerticalStackLayout>
 
@@ -73,55 +102,53 @@
 
             </Frame>
 
-            <!-- ADVERTENCIA WINDOWS -->
+            <!--  ADVERTENCIA WINDOWS  -->
             <Frame
+                Padding="15"
                 BackgroundColor="#FFF3CD"
-                CornerRadius="12"
-                Padding="15">
+                CornerRadius="12">
 
                 <HorizontalStackLayout Spacing="10">
 
-                    <Image
-                        Source="emergency.png"
-                        HeightRequest="24"/>
+                    <Image HeightRequest="24" Source="emergency.png" />
 
                     <Label
-                        Text="La cámara solo está disponible en dispositivos móviles."
                         FontSize="13"
+                        Text="La cámara solo está disponible en dispositivos móviles."
                         TextColor="#856404"
-                        VerticalOptions="Center"/>
+                        VerticalOptions="Center" />
 
                 </HorizontalStackLayout>
 
             </Frame>
 
-            <!-- FOTO -->
+            <!--  FOTO  -->
             <Button
-                Text="Tomar fotografía (obligatoria)"
-                ImageSource="fotofix.png"
                 BackgroundColor="#0D3B66"
-                TextColor="White"
+                Clicked="TomarFoto"
                 CornerRadius="14"
                 HeightRequest="60"
-                Clicked="TomarFoto"/>
+                ImageSource="fotofix.png"
+                Text="Tomar fotografía (obligatoria)"
+                TextColor="White" />
 
-            <!-- OBSERVACIONES -->
+            <!--  OBSERVACIONES  -->
             <Editor
                 x:Name="ObservacionesEntry"
-                Placeholder="Observaciones (opcional)"
                 AutoSize="TextChanges"
+                BackgroundColor="#F4F4F4"
                 HeightRequest="120"
-                BackgroundColor="#F4F4F4"/>
+                Placeholder="Observaciones (opcional)" />
 
-            <!-- BOTON DEVOLVER -->
+            <!--  BOTON DEVOLVER  -->
             <Button
                 x:Name="ConfirmarButton"
-                Text="Confirmar devolución"
                 BackgroundColor="#2E7D32"
-                TextColor="White"
+                Clicked="ConfirmarDevolucion"
                 CornerRadius="14"
                 HeightRequest="60"
-                Clicked="ConfirmarDevolucion"/>
+                Text="Confirmar devolución"
+                TextColor="White" />
 
         </VerticalStackLayout>
 
