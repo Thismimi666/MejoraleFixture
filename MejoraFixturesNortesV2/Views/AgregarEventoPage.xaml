@@ -1,0 +1,95 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.AgregarEventoPage"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- HEADER -->
+        <Grid BackgroundColor="#0D3B66" Padding="15">
+            <Label
+                Text="Agregar Evento"
+                TextColor="White"
+                FontSize="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="18">
+
+                <!-- FECHA -->
+                <Label
+                    Text="Fecha"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    TextColor="#0D3B66"/>
+
+                <Frame
+                    CornerRadius="12"
+                    Padding="10"
+                    BackgroundColor="#F4F6F8"
+                    HasShadow="False">
+
+                    <DatePicker x:Name="FechaInicio"/>
+                </Frame>
+
+                <!-- TIPO -->
+                <Label
+                    Text="Tipo de Evento"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    TextColor="#0D3B66"/>
+
+                <Frame
+                    CornerRadius="12"
+                    Padding="5"
+                    BackgroundColor="#F4F6F8"
+                    HasShadow="False">
+
+                    <Picker x:Name="TipoPicker" Title="Elegir tipo...">
+                        <Picker.Items>
+                            <x:String>Interna</x:String>
+                            <x:String>Externa</x:String>
+                            <x:String>Evento</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
+
+                <!-- COMENTARIOS -->
+                <Label
+                    Text="Comentarios"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    TextColor="#0D3B66"/>
+
+                <Frame
+                    CornerRadius="12"
+                    BackgroundColor="#F4F6F8"
+                    HasShadow="False">
+
+                    <Editor
+                        x:Name="ComentariosEntry"
+                        Placeholder="Escribe comentarios..."
+                        HeightRequest="100"/>
+                </Frame>
+
+                <!-- BOTÓN -->
+                <Button
+                    Text="Guardar Evento"
+                    BackgroundColor="#2E7D32"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="55"
+                    FontAttributes="Bold"
+                   Clicked="GuardarEvento"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

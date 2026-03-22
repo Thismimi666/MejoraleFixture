@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.AuditoriasPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MejoraFixturesNortesV2.Controls"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <!-- GRID PRINCIPAL -->
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- CONTENIDO -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,320">
+
+            <!-- PANEL IZQUIERDO -->
+            <Grid Padding="25" RowDefinitions="Auto,Auto,*,Auto">
+
+                <!-- TITULO -->
+                <Label
+                    Text="Auditorías"
+                    FontSize="26"
+                    FontAttributes="Bold"
+                    TextColor="#0D3B66"/>
+
+                <!-- NAVEGACION MES -->
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,10">
+
+                    <ImageButton
+                        Source="flechaizq.png"
+                        HeightRequest="30"
+                        BackgroundColor="Transparent"
+                        Clicked="MesAnterior"/>
+
+                    <Label
+                        Grid.Column="1"
+                        x:Name="MesLabel"
+                        HorizontalOptions="Center"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="#0D3B66"/>
+
+                    <ImageButton
+                        Grid.Column="2"
+                        Source="flechader.png"
+                        HeightRequest="30"
+                        BackgroundColor="Transparent"
+                        Clicked="MesSiguiente"/>
+
+                </Grid>
+
+                <!-- CALENDARIO -->
+                <Grid
+                    Grid.Row="2"
+                    x:Name="CalendarioGrid"
+                    RowSpacing="10"
+                    ColumnSpacing="10"/>
+
+                <!-- LEYENDA -->
+                <HorizontalStackLayout Grid.Row="3" Spacing="20">
+
+                    <HorizontalStackLayout Spacing="5">
+                        <BoxView WidthRequest="12" HeightRequest="12" Color="#1F4E8C" CornerRadius="6"/>
+                        <Label Text="Auditoría interna" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="5">
+                        <BoxView WidthRequest="12" HeightRequest="12" Color="#F9A825" CornerRadius="6"/>
+                        <Label Text="Auditoría externa" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="5">
+                        <BoxView WidthRequest="12" HeightRequest="12" Color="#BDBDBD" CornerRadius="6"/>
+                        <Label Text="Eventos" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                </HorizontalStackLayout>
+
+            </Grid>
+
+            <!-- PANEL DERECHO -->
+            <Frame
+                Grid.Column="1"
+                BackgroundColor="#F4F6F8"
+                Padding="20"
+                CornerRadius="18"
+                Margin="10">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label
+                        Text="Eventos del Día"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="#0D3B66"/>
+
+                    <Label
+                        x:Name="FechaSeleccionadaLabel"
+                        TextColor="Gray"/>
+
+                    <VerticalStackLayout
+                        x:Name="EventosContainer"
+                        Spacing="10"/>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </Grid>
+
+        <!-- MENU INFERIOR -->
+        <controls:BottomMenu Grid.Row="1"/>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.SolicitarFixturePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <!-- TITULO -->
+        <Label
+            Text="Solicitar Fixture"
+            FontSize="28"
+            FontAttributes="Bold"
+            TextColor="#0D3B66"
+            Margin="20,30,20,10"/>
+
+        <!-- TARJETA FIXTURE -->
+        <Frame
+            Grid.Row="1"
+            Margin="20"
+            Padding="20"
+            CornerRadius="15"
+            BorderColor="#E6E6E6"
+            BackgroundColor="White"
+            IsVisible="False"
+            x:Name="FixtureCard">
+
+            <Grid ColumnDefinitions="90,*">
+
+                <Image
+                    Source="fixture1.png"
+                    HeightRequest="80"
+                    WidthRequest="80"/>
+
+                <VerticalStackLayout Grid.Column="1">
+
+                    <Label
+                        x:Name="SerialLabel"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="#0D3B66"/>
+
+                    <Label
+                        x:Name="ProcesoLabel"
+                        FontSize="14"
+                        TextColor="Gray"/>
+
+                    <Label
+                        x:Name="EstadoLabel"
+                        Padding="8,3"
+                        FontSize="12"
+                        TextColor="White"
+                        HorizontalOptions="Start"/>
+
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </Frame>
+
+        <!-- BOTONES -->
+        <VerticalStackLayout
+            Grid.Row="2"
+            Margin="20"
+            Spacing="15">
+
+            <Button
+                Text="Escanear código"
+                ImageSource="elescaneo.png"
+                BackgroundColor="#0D3B66"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="55"
+                Clicked="EscanearCodigo"/>
+
+            <Button
+                Text="Tomar fotografía"
+                ImageSource="fotofix.png"
+                BackgroundColor="#0D3B66"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="55"
+                Clicked="TomarFoto"/>
+
+            <Entry
+                x:Name="UsuarioEntry"
+                Placeholder="Nombre del usuario"
+                BackgroundColor="#F4F4F4"
+                TextColor="#0D3B66"/>
+
+        </VerticalStackLayout>
+
+        <!-- CONFIRMAR -->
+        <Button
+            Grid.Row="3"
+            Text="Confirmar solicitud"
+            BackgroundColor="#2E7D32"
+            TextColor="White"
+            Margin="20"
+            HeightRequest="55"
+            CornerRadius="12"
+            IsEnabled="False"
+            x:Name="ConfirmarButton"
+            Clicked="ConfirmarSolicitud"/>
+
+        <!-- MENSAJE WINDOWS -->
+        <Frame
+            Grid.Row="4"
+            Margin="20"
+            Padding="15"
+            BackgroundColor="#F4F4F4"
+            CornerRadius="12">
+
+            <HorizontalStackLayout Spacing="10">
+
+                <Image
+                    Source="emergency.png"
+                    HeightRequest="25"/>
+
+                <Label
+                    Text="El escaneo y la fotografía sólo están disponibles en dispositivos Android."
+                    VerticalOptions="Center"
+                    TextColor="#333"/>
+
+            </HorizontalStackLayout>
+
+        </Frame>
+
+    </Grid>
+
+</ContentPage>

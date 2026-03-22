@@ -1,0 +1,37 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.AgregarNotaPage"
+    BackgroundColor="#0D3B66">
+
+    <StackLayout Padding="20" Spacing="20">
+
+        <Label Text="Nueva Nota"
+               FontSize="22"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"/>
+
+        <Frame BackgroundColor="White" CornerRadius="10">
+            <Entry x:Name="TituloEntry"
+                   Placeholder="Título"
+                   TextColor="Black"/>
+        </Frame>
+
+        <Frame BackgroundColor="White" CornerRadius="10">
+            <Editor x:Name="DescripcionEditor"
+                    Placeholder="Descripción"
+                    HeightRequest="120"
+                    TextColor="Black"/>
+        </Frame>
+
+        <Button Text="Guardar Nota"
+                BackgroundColor="White"
+                TextColor="#0D3B66"
+                CornerRadius="15"
+                HeightRequest="50"
+                Clicked="OnGuardarClicked"/>
+
+    </StackLayout>
+
+</ContentPage>

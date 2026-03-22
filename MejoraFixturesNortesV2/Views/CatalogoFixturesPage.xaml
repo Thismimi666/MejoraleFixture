@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.CatalogoFixturesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MejoraFixturesNortesV2.Controls"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <!-- HEADER -->
+        <Grid ColumnDefinitions="*,Auto" Padding="20,30,20,10">
+
+            <Label
+                Text="Catálogo de Fixtures"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="#0D3B66"/>
+
+            <Button
+                Grid.Column="1"
+                Text="Cerrar sesión"
+                BackgroundColor="#0D3B66"
+                TextColor="White"
+                CornerRadius="10"
+                Clicked="CerrarSesion"/>
+        </Grid>
+
+        <!-- BUSCADOR -->
+        <Frame Grid.Row="1"
+               Margin="20,0,20,15"
+               CornerRadius="15"
+               BackgroundColor="#F4F4F4"
+               HasShadow="False">
+
+            <Grid ColumnDefinitions="30,*">
+
+                <Image
+                    Source="lupa.png"
+                    HeightRequest="18"
+                    VerticalOptions="Center"/>
+
+                <Entry
+                    x:Name="BuscarEntry"
+                    Grid.Column="1"
+                    Placeholder="Buscar fixture..."
+                    TextChanged="OnBuscarTextChanged"
+                    BackgroundColor="Transparent"
+                    TextColor="#0D3B66"/>
+
+            </Grid>
+        </Frame>
+
+        <!-- LISTA -->
+        <CollectionView
+            x:Name="FixturesCollection"
+            Grid.Row="2"
+            Margin="15"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Frame CornerRadius="18"
+                           Padding="15"
+                           Margin="0,0,0,15"
+                           BackgroundColor="White"
+                           BorderColor="#E6E6E6"
+                           HasShadow="True">
+
+                        <Grid ColumnDefinitions="90,*,Auto">
+
+                            <!-- Imagen -->
+                            <Image
+                                Source="{Binding Imagen}"
+                                HeightRequest="80"
+                                WidthRequest="80"
+                                Aspect="AspectFit"/>
+
+                            <!-- Información -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="4">
+
+                                <Label
+                                    Text="{Binding Serial}"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    TextColor="#0D3B66"/>
+
+                                <Label
+                                    Text="{Binding Proceso}"
+                                    FontSize="14"
+                                    TextColor="Gray"/>
+
+                                <Label
+                                    Text="{Binding Responsable}"
+                                    FontSize="14"
+                                    TextColor="Gray"/>
+
+                                <!-- Estado -->
+                                <Label
+                                    Text="{Binding Estado}"
+                                    Padding="8,3"
+                                    FontSize="12"
+                                    TextColor="White"
+                                    HorizontalOptions="Start">
+
+                                    <Label.Triggers>
+
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Estado}"
+                                                     Value="Disponible">
+                                            <Setter Property="BackgroundColor" Value="#2E7D32"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Estado}"
+                                                     Value="En uso">
+                                            <Setter Property="BackgroundColor" Value="#F9A825"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Estado}"
+                                                     Value="Dañada">
+                                            <Setter Property="BackgroundColor" Value="#C62828"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Estado}"
+                                                     Value="Baja">
+                                            <Setter Property="BackgroundColor" Value="#455A64"/>
+                                        </DataTrigger>
+
+                                    </Label.Triggers>
+
+                                </Label>
+
+                            </VerticalStackLayout>
+
+                            <!-- BOTONES -->
+                            <VerticalStackLayout Grid.Column="2" Spacing="6">
+
+                                <!-- USUARIO -->
+                                <Button
+                                    Text="Solicitar"
+                                    WidthRequest="120"
+                                    HeightRequest="45"
+                                    BackgroundColor="#0D3B66"
+                                    TextColor="White"
+                                    CornerRadius="12"
+                                    FontAttributes="Bold"
+                                    Clicked="OnSolicitarClicked">
+
+                                    <Button.Triggers>
+
+                                        <DataTrigger TargetType="Button"
+                                                     Binding="{Binding Estado}"
+                                                     Value="En uso">
+                                            <Setter Property="Text" Value="En uso"/>
+                                            <Setter Property="BackgroundColor" Value="#F9A825"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Button"
+                                                     Binding="{Binding Estado}"
+                                                     Value="Dañada">
+                                            <Setter Property="Text" Value="Dañada"/>
+                                            <Setter Property="BackgroundColor" Value="#C62828"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Button"
+                                                     Binding="{Binding Estado}"
+                                                     Value="Baja">
+                                            <Setter Property="Text" Value="Baja"/>
+                                            <Setter Property="BackgroundColor" Value="#9E9E9E"/>
+                                        </DataTrigger>
+
+                                    </Button.Triggers>
+
+                                </Button>
+
+                                <!-- ADMIN: ESTADO -->
+                                <Button
+                                    Text="Estado"
+                                    TextColor="White"
+                                   BackgroundColor="DarkOrange"
+                                    CornerRadius="10"
+                                    HeightRequest="35"
+                                    FontSize="12"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EsAdmin}"
+                                    Clicked="OnCambiarEstadoClicked"/>
+
+                                <!-- ADMIN: ELIMINAR -->
+                                <Button
+                                    Text="Eliminar"
+                                    BackgroundColor="#C62828"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    HeightRequest="35"
+                                    FontSize="12"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=EsAdmin}"
+                                    Clicked="OnEliminarClicked"/>
+
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <!-- MENU INFERIOR -->
+        <controls:BottomMenu Grid.Row="3"/>
+
+    </Grid>
+
+</ContentPage>

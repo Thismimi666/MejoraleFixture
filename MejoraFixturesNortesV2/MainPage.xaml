@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.MainPage"
+    BackgroundColor="White">
+
+    <Grid>
+
+        <VerticalStackLayout
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Spacing="25"
+            Padding="30">
+
+            <!-- Logo -->
+            <Image
+                Source="safefixx.jpg"
+                HeightRequest="200"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"/>
+
+            <!-- Título -->
+            <Label
+                Text="SafeFix Control System"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="#0D3B66"
+                HorizontalOptions="Center"/>
+
+            <!-- Indicador de carga -->
+            <ActivityIndicator
+                x:Name="loadingIndicator"
+                IsRunning="True"
+                Color="#0D3B66"
+                WidthRequest="45"
+                HeightRequest="45"
+                HorizontalOptions="Center"/>
+
+            <Label
+                Text="Inicializando sistema..."
+                FontSize="16"
+                TextColor="#0D3B66"
+                HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

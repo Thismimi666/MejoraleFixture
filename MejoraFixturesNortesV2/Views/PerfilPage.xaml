@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.PerfilPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MejoraFixturesNortesV2.Controls"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="0">
+
+            <VerticalStackLayout Padding="25" Spacing="25">
+
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Label
+                        Text="Perfil"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        TextColor="#0D3B66"/>
+
+                    <Button
+                        Grid.Column="1"
+                        Text="Cerrar sesión"
+                        BackgroundColor="#0D3B66"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Clicked="CerrarSesion"/>
+
+                </Grid>
+
+                <!-- INFORMACION USUARIO -->
+                <Frame
+                    CornerRadius="18"
+                    Padding="20"
+                    BackgroundColor="#F4F6F8">
+
+                    <HorizontalStackLayout Spacing="20">
+
+                        <Image
+                            Source="perfiluser.png"
+                            HeightRequest="80"
+                            WidthRequest="80"/>
+
+                        <VerticalStackLayout>
+
+                            <Label
+                                x:Name="NombreLabel"
+                                Text="Nombre Usuario"
+                                FontSize="20"
+                                FontAttributes="Bold"
+                                TextColor="#0D3B66"/>
+
+                            <Label
+                                x:Name="EmpleadoLabel"
+                                Text="FN-0001"
+                                FontSize="16"
+                                TextColor="Gray"/>
+
+                        </VerticalStackLayout>
+
+                    </HorizontalStackLayout>
+
+                </Frame>
+
+                <!-- RESUMEN DEL DIA -->
+                <Frame
+                    CornerRadius="18"
+                    Padding="15"
+                    BackgroundColor="White"
+                    BorderColor="#E0E0E0"
+                    HasShadow="True">
+
+                    <VerticalStackLayout Spacing="10">
+
+                        <HorizontalStackLayout Spacing="8">
+
+                            <Image
+                                Source="calendar.png"
+                                HeightRequest="20"/>
+
+                            <Label
+                                Text="Resumen del día"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="#0D3B66"/>
+
+                        </HorizontalStackLayout>
+
+                        <Label
+                            x:Name="LblActivos"
+                            FontSize="14"
+                            TextColor="Black"/>
+
+                        <Label
+                            x:Name="LblPendientes"
+                            FontSize="14"
+                            TextColor="Black"/>
+
+                        <Label
+                            x:Name="LblUltimo"
+                            FontSize="14"
+                            TextColor="Gray"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- FIXTURES EN USO -->
+                <Label
+                    Text="Fixtures en uso"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="#0D3B66"/>
+
+                <CollectionView
+                    x:Name="FixturesCollection"
+                    SelectionMode="None">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Frame
+                                CornerRadius="18"
+                                Padding="15"
+                                Margin="0,0,0,15"
+                                BackgroundColor="White"
+                                BorderColor="#E6E6E6"
+                                HasShadow="True">
+
+                                <Grid ColumnDefinitions="90,*,Auto" ColumnSpacing="10">
+
+                                    <!-- IMAGEN -->
+                                    <Image
+                                        Source="{Binding Imagen}"
+                                        HeightRequest="80"
+                                        WidthRequest="80"/>
+
+                                    <!-- INFO -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+
+                                        <Label
+                                            Text="{Binding Serial}"
+                                            FontSize="18"
+                                            FontAttributes="Bold"
+                                            TextColor="#0D3B66"/>
+
+                                        <Label
+                                            Text="{Binding Proceso}"
+                                            FontSize="14"
+                                            TextColor="Gray"/>
+
+                                        <Label
+                                            Text="En uso"
+                                            FontSize="12"
+                                            TextColor="White"
+                                            BackgroundColor="#F9A825"
+                                            Padding="5,2"
+                                            HorizontalOptions="Start"/>
+
+                                    </VerticalStackLayout>
+
+                                    <!-- BOTONES -->
+                                    <VerticalStackLayout
+                                        Grid.Column="2"
+                                        Spacing="8">
+
+                                        <Button
+                                            Text="Devolver"
+                                            BackgroundColor="#1F4E8C"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="35"
+                                            Clicked="DevolverFixture"/>
+
+                                        <Button
+                                            Text="Dañada"
+                                            BackgroundColor="#F9A825"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="35"
+                                            Clicked="MarcarDanada"/>
+
+                                        <Button
+                                            Text="Perdida"
+                                            BackgroundColor="#C62828"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="35"
+                                            Clicked="MarcarPerdida"/>
+
+                                    </VerticalStackLayout>
+
+                                </Grid>
+
+                            </Frame>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+        <!-- MENU INFERIOR -->
+        <controls:BottomMenu Grid.Row="1"/>
+
+    </Grid>
+
+</ContentPage>

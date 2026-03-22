@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.LoginPage"
+    BackgroundColor="#0D3B66">
+
+    <Grid>
+
+        <!-- CONTENEDOR CENTRAL -->
+        <VerticalStackLayout
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Padding="20"
+            MaximumWidthRequest="420">
+
+            <!-- TARJETA -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="30"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="18">
+
+                    <Image Source="safefixx.jpg"
+                           HeightRequest="120"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Inicio de sesión"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           TextColor="#0D3B66"
+                           HorizontalOptions="Center"/>
+
+                    <Frame BackgroundColor="#F4F6F8"
+                           CornerRadius="12"
+                           Padding="10">
+
+                        <Label Text="Acceda con su usuario corporativo. Recuerde que la contraseña temporal es válida una vez."
+                               FontSize="12"
+                               TextColor="Gray"/>
+                    </Frame>
+
+                    <Entry x:Name="UsuarioEntry"
+                           Placeholder="FN-Empleado"
+                           BackgroundColor="#F2F2F2"
+                           TextColor="Black"/>
+
+                    <Grid ColumnDefinitions="*,40">
+
+                        <Entry x:Name="PasswordEntry"
+                               Placeholder="Contraseña"
+                               IsPassword="True"
+                               BackgroundColor="#F2F2F2"
+                               TextColor="Black"/>
+
+                        <ImageButton Grid.Column="1"
+                                     Source="novisible.png"
+                                     Clicked="OnTogglePassword"
+                                     BackgroundColor="Transparent"/>
+                    </Grid>
+
+                    <Button Text="Ingresar"
+                            BackgroundColor="#0D3B66"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="50"
+                            Clicked="OnLoginClicked"/>
+
+                    <Button Text="Cambiar contraseña temporal"
+                            BackgroundColor="White"
+                            TextColor="#0D3B66"
+                            BorderColor="#0D3B66"
+                            BorderWidth="2"
+                            CornerRadius="12"
+                            HeightRequest="50"
+                            Clicked="OnCambiarPassword"/>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+
+
+        <!-- BOTON AUDITOR (SUPERIOR DERECHO) -->
+        <Grid
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            Margin="10"
+            ColumnDefinitions="70,Auto">
+
+            <ImageButton Source="lupaa.png"
+                         WidthRequest="70"
+                         HeightRequest="70"
+                         BackgroundColor="#E5E5E5"
+                         CornerRadius="35"
+                         Clicked="AbrirGraficos_Clicked">
+
+                <ImageButton.Shadow>
+                    <Shadow Brush="#0D3B66"
+                            Offset="4,4"
+                            Radius="12"
+                            Opacity="0.7"/>
+                </ImageButton.Shadow>
+
+            </ImageButton>
+
+            <Frame Grid.Column="1"
+                   BackgroundColor="#E5E5E5"
+                   CornerRadius="18"
+                   Padding="12"
+                   Margin="10,15,0,0">
+
+                <VerticalStackLayout>
+
+                    <Label Text="¿Eres auditor?"
+                           FontAttributes="Bold"
+                           TextColor="#0D3B66"/>
+
+                    <Label Text="Ver gráficos de auditoría"
+                           FontSize="12"
+                           TextColor="#0D3B66"/>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

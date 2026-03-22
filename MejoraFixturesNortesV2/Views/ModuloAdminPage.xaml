@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.ModuloAdminPage"
+    BackgroundColor="#0D3B66"
+    NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="30" Spacing="30">
+
+            <!-- LOGO -->
+            <Image
+                Source="safeazul.png"
+                HeightRequest="110"
+                HorizontalOptions="Center"/>
+
+            <!-- GRID DE OPCIONES ADMIN -->
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="20"
+                RowSpacing="20">
+
+                <!-- AGREGAR FIXTURE -->
+                <Frame Grid.Row="0"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirAgregarFixture"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="agregar.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Agregar Fixture"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- AGREGAR EVENTO CALENDARIO -->
+                <Frame Grid.Row="0"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirAgregarEvento"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="calendario.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Agregar Evento"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- AGREGAR ALERTA -->
+                <Frame Grid.Row="1"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirAgregarAlerta"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="emergency.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Alerta de Calidad"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- ELIMINAR / EDITAR FIXTURE -->
+                <Frame Grid.Row="1"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirGestionFixture"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="eliminar.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Gestionar Fixture"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+            </Grid>
+
+            <!-- BOTON CERRAR SESION -->
+            <Button
+                Text="Cerrar sesión"
+                ImageSource="sesion.png"
+                BackgroundColor="White"
+                TextColor="#0D3B66"
+                CornerRadius="15"
+                HeightRequest="55"
+                Clicked="CerrarSesion"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

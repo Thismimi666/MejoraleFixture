@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.AdminPage"
+    BackgroundColor="#0D3B66"
+    NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="30" Spacing="30">
+
+            <!-- LOGO -->
+            <Image
+                Source="safeazul.png"
+                HeightRequest="110"
+                HorizontalOptions="Center"/>
+
+            <!-- GRID DE MODULOS -->
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="20"
+                RowSpacing="20">
+
+                <!-- AGREGAR -->
+                <Frame Grid.Row="0"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirAgregar"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="agregar.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Agregar"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- CREAR INCIDENCIA -->
+                <Frame Grid.Row="0"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirIncidencia"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="incid3.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Crear Incidencia"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- NOTAS ADMIN -->
+                <Frame Grid.Row="1"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirNotas"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="notas.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Notas Admin"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- HISTORIAL -->
+                <Frame Grid.Row="1"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirHistorial"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="historial.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Historial"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+            </Grid>
+
+            <!-- BOTON CERRAR SESION -->
+            <Button
+                Text="Cerrar sesión"
+                ImageSource="sesion.png"
+                BackgroundColor="White"
+                TextColor="#0D3B66"
+                CornerRadius="15"
+                HeightRequest="55"
+                Clicked="CerrarSesion"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

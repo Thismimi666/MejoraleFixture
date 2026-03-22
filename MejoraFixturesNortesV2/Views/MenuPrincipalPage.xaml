@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MejoraFixturesNortesV2.Views.MenuPrincipalPage"
+    BackgroundColor="#0D3B66"
+    NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="30" Spacing="30">
+
+            <!-- LOGO -->
+            <Image
+                Source="safeazul.png"
+                HeightRequest="110"
+                HorizontalOptions="Center"/>
+
+            <!-- GRID DE MODULOS -->
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="20"
+                RowSpacing="20">
+
+                <!-- CATALOGO -->
+                <Frame Grid.Row="0"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirCatalogo"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="fixturecatalogo.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Catálogo"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- CALENDARIO -->
+                <Frame Grid.Row="0"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirCalendario"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="calendario.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Calendario"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- DEVOLVER FIXTURE -->
+                <Frame Grid.Row="1"
+                       Grid.Column="0"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirDevolucion"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="devolver.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Devolver Fixture"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!-- ESCANEAR FIXTURE -->
+                <Frame Grid.Row="1"
+                       Grid.Column="1"
+                       BackgroundColor="White"
+                       CornerRadius="18"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AbrirEscaner"/>
+                    </Frame.GestureRecognizers>
+
+                    <VerticalStackLayout HorizontalOptions="Center">
+
+                        <Image
+                            Source="escaner.png"
+                            HeightRequest="70"/>
+
+                        <Label
+                            Text="Escanear Fixture"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+            </Grid>
+
+            <!-- BOTON CERRAR SESION -->
+            <Button
+                Text="Cerrar sesión"
+                ImageSource="sesion.png"
+                BackgroundColor="White"
+                TextColor="#0D3B66"
+                CornerRadius="15"
+                HeightRequest="55"
+                Clicked="CerrarSesion"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

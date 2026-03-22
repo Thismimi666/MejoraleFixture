@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.AgregarFixturePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <!-- HEADER -->
+        <Grid ColumnDefinitions="*,Auto" Margin="20,30,20,10">
+
+            <Label
+                Text="Agregar Fixture"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="#0D3B66"/>
+
+            <Button
+                Grid.Column="1"
+                Text="Catálogo"
+                BackgroundColor="#0D3B66"
+                TextColor="White"
+                CornerRadius="10"
+                Clicked="AbrirCatalogo"/>
+
+        </Grid>
+
+        <!-- TARJETA IMAGEN -->
+        <Frame
+            Grid.Row="1"
+            Margin="20"
+            Padding="20"
+            CornerRadius="15"
+            BorderColor="#E6E6E6"
+            BackgroundColor="White">
+
+            <Grid ColumnDefinitions="90,*">
+
+                <Image
+                    x:Name="imgFixture"
+                    Source="fotofix.png"
+                    HeightRequest="80"
+                    WidthRequest="80"/>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="10">
+
+                    <Button
+                        Text="Tomar fotografía"
+                        ImageSource="fotofix.png"
+                        BackgroundColor="#0D3B66"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Clicked="TomarFoto"/>
+
+                    <Button
+                        Text="Seleccionar de galería"
+                        ImageSource="galeria.png"
+                        BackgroundColor="#0D3B66"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Clicked="AbrirGaleria"/>
+
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </Frame>
+
+        <!-- FORMULARIO -->
+        <VerticalStackLayout
+            Grid.Row="2"
+            Margin="20"
+            Spacing="15">
+
+            <Entry
+                x:Name="txtCodigo"
+                Placeholder="Serial del fixture"
+                BackgroundColor="#F4F4F4"
+                TextColor="#0D3B66"/>
+
+            <Entry
+                x:Name="txtProceso"
+                Placeholder="Proceso"
+                BackgroundColor="#F4F4F4"
+                TextColor="#0D3B66"/>
+
+            <Entry
+                x:Name="txtResponsable"
+                Placeholder="Responsable (solo si está en uso)"
+                BackgroundColor="#F4F4F4"
+                TextColor="#0D3B66"/>
+
+        </VerticalStackLayout>
+
+        <!-- ESTADO -->
+        <VerticalStackLayout
+            Grid.Row="3"
+            Margin="20"
+            Spacing="10">
+
+            <Label
+                Text="Estado"
+                FontAttributes="Bold"
+                TextColor="#0D3B66"/>
+
+            <HorizontalStackLayout Spacing="10">
+
+                <Button Text="Disponible"
+                        BackgroundColor="#2E7D32"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Clicked="EstadoDisponible"/>
+
+                <Button Text="En uso"
+                        BackgroundColor="#0D3B66"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Clicked="EstadoEnUso"/>
+
+                <Button Text="Dañada"
+                        BackgroundColor="#C62828"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Clicked="EstadoDanada"/>
+
+                <Button Text="Baja"
+                        BackgroundColor="Gray"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Clicked="EstadoBaja"/>
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+        <!-- GUARDAR -->
+        <Button
+            Grid.Row="4"
+            Text="Guardar Fixture"
+            BackgroundColor="#2E7D32"
+            TextColor="White"
+            Margin="20"
+            HeightRequest="55"
+            CornerRadius="12"
+            Clicked="GuardarFixture"/>
+
+    </Grid>
+
+</ContentPage>
