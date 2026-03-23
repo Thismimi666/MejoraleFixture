@@ -3,49 +3,55 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid BackgroundColor="White"
-          HeightRequest="75"
-          ColumnDefinitions="*,*,*,*"
-          Padding="0,5">
+    <Grid
+        Padding="0,5"
+        BackgroundColor="White"
+        ColumnDefinitions="*,*,*"
+        HeightRequest="75">
 
-        <!-- Catalogo -->
+        <!--  Catalogo  -->
         <VerticalStackLayout HorizontalOptions="Center" Spacing="3">
             <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnCatalogoTapped"/>
+                <TapGestureRecognizer Tapped="OnCatalogoTapped" />
             </VerticalStackLayout.GestureRecognizers>
 
-            <Image Source="fixturecatalogo.png" HeightRequest="25"/>
-            <Label Text="Catalogo" FontSize="12" TextColor="#0D3B66"/>
+            <Image HeightRequest="25" Source="fixturecatalogo.png" />
+            <Label
+                FontSize="12"
+                Text="Catalogo"
+                TextColor="#0D3B66" />
         </VerticalStackLayout>
 
-        <!-- Auditorias -->
-        <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="3">
+        <!--  Auditorias  -->
+        <VerticalStackLayout
+            Grid.Column="1"
+            HorizontalOptions="Center"
+            Spacing="3">
             <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnAuditoriasTapped"/>
+                <TapGestureRecognizer Tapped="OnAuditoriasTapped" />
             </VerticalStackLayout.GestureRecognizers>
 
-            <Image Source="calendario.png" HeightRequest="25"/>
-            <Label Text="Auditorias" FontSize="12" TextColor="#0D3B66"/>
+            <Image HeightRequest="25" Source="calendario.png" />
+            <Label
+                FontSize="12"
+                Text="Auditorias"
+                TextColor="#0D3B66" />
         </VerticalStackLayout>
 
-        <!-- Reportes -->
-        <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="3">
+        <!--  Perfil  -->
+        <VerticalStackLayout
+            Grid.Column="2"
+            HorizontalOptions="Center"
+            Spacing="3">
             <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnReportesTapped"/>
+                <TapGestureRecognizer Tapped="OnPerfilTapped" />
             </VerticalStackLayout.GestureRecognizers>
 
-            <Image Source="reportes.png" HeightRequest="25"/>
-            <Label Text="Reportes" FontSize="12" TextColor="#0D3B66"/>
-        </VerticalStackLayout>
-
-        <!-- Perfil -->
-        <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="3">
-            <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnPerfilTapped"/>
-            </VerticalStackLayout.GestureRecognizers>
-
-            <Image Source="catalogousuario.png" HeightRequest="25"/>
-            <Label Text="Perfil" FontSize="12" TextColor="#0D3B66"/>
+            <Image HeightRequest="25" Source="catalogousuario.png" />
+            <Label
+                FontSize="12"
+                Text="Perfil"
+                TextColor="#0D3B66" />
         </VerticalStackLayout>
 
     </Grid>

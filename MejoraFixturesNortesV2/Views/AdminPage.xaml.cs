@@ -9,7 +9,7 @@ public partial class AdminPage : ContentPage
 
     private async void AbrirAgregar(object sender, EventArgs e)
     {
-         await Navigation.PushAsync(new ModuloAdminPage());
+        await Navigation.PushAsync(new ModuloAdminPage());
     }
 
     private async void AbrirIncidencia(object sender, EventArgs e)
@@ -38,13 +38,12 @@ public partial class AdminPage : ContentPage
 
     private async void AbrirNotas(object sender, EventArgs e)
     {
-         await Navigation.PushAsync(new NotasAdminPage());
+        await Navigation.PushAsync(new NotasAdminPage());
     }
 
     private async void AbrirHistorial(object sender, EventArgs e)
     {
-        await DisplayAlert("Historial", "Módulo en desarrollo", "OK");
-        // await Navigation.PushAsync(new HistorialPage());
+        await Navigation.PushAsync(new HistorialPage());
     }
 
     private void CerrarSesion(object sender, EventArgs e)

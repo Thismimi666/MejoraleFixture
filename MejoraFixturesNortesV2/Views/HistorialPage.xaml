@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.HistorialPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!--  HEADER  -->
+        <Grid
+            Grid.Row="0"
+            Padding="20,50,20,20"
+            BackgroundColor="#0D3B66"
+            ColumnDefinitions="Auto,*">
+
+            <Border
+                Grid.Column="0"
+                Padding="0,0,10,0"
+                BackgroundColor="Transparent"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VolverButton_Clicked" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4">
+                    <Label
+                        FontSize="28"
+                        Text="&#x2039;"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontSize="16"
+                        Text="Volver"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Label
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Historial de Movimientos"
+                TextColor="White"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+        <!--  LISTA MOVIMIENTOS  -->
+        <CollectionView
+            x:Name="MovimientosCollection"
+            Grid.Row="1"
+            Margin="15,10">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout
+                    Margin="0,60,0,0"
+                    HorizontalOptions="Center"
+                    Spacing="10">
+                    <Label
+                        FontSize="48"
+                        HorizontalOptions="Center"
+                        Text="&#x1F4CB;" />
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="Sin movimientos registrados"
+                        TextColor="Gray" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="0,0,0,12"
+                        Padding="15"
+                        BackgroundColor="White"
+                        BorderColor="#E6E6E6"
+                        CornerRadius="16"
+                        HasShadow="True">
+
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="10"
+                            RowDefinitions="Auto,Auto,Auto">
+
+                            <!--  SERIAL + TIPO badge  -->
+                            <HorizontalStackLayout
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Spacing="10">
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="17"
+                                    Text="{Binding FixtureSerial}"
+                                    TextColor="#0D3B66"
+                                    VerticalOptions="Center" />
+
+                                <Border
+                                    Padding="8,3"
+                                    BackgroundColor="#888888"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <Border.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Tipo}"
+                                            TargetType="Border"
+                                            Value="Solicitud">
+                                            <Setter Property="BackgroundColor" Value="#1F4E8C" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Tipo}"
+                                            TargetType="Border"
+                                            Value="Devoluci&#xF3;n">
+                                            <Setter Property="BackgroundColor" Value="#2E7D32" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        Text="{Binding Tipo}"
+                                        TextColor="White" />
+                                </Border>
+
+                            </HorizontalStackLayout>
+
+                            <!--  USUARIO  -->
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,6,0,0"
+                                FontSize="14"
+                                Text="{Binding Usuario, StringFormat='&#x1F464; {0}'}"
+                                TextColor="#444" />
+
+                            <!--  FECHA  -->
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="0,3,0,0"
+                                FontSize="13"
+                                Text="{Binding Fecha, StringFormat='&#x1F551; {0:dd/MM/yyyy  HH:mm}'}"
+                                TextColor="Gray" />
+
+                            <!--  BOTÓN VER FOTO  -->
+                            <Button
+                                Grid.RowSpan="3"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                BorderWidth="0"
+                                Clicked="VerFoto"
+                                FontSize="28"
+                                IsVisible="True"
+                                Text="&#x1F4F7;"
+                                VerticalOptions="Center"
+                                WidthRequest="55">
+                                <Button.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding FotoRuta}"
+                                        TargetType="Button"
+                                        Value="{x:Null}">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding FotoRuta}"
+                                        TargetType="Button"
+                                        Value="">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <!--
+            OVERLAY FOTO POPUP
+            Estructura 3x3: las 8 celdas exteriores cierran al tocar,
+            la celda central (Row=1, Col=1) contiene la imagen sin TapGestureRecognizer.
+            Así tocar FUERA de la imagen cierra, tocar SOBRE la imagen no hace nada.
+        -->
+        <Grid
+            x:Name="FotoOverlay"
+            Grid.RowSpan="2"
+            BackgroundColor="#CC000000"
+            ColumnDefinitions="*,Auto,*"
+            IsVisible="False"
+            RowDefinitions="*,Auto,*">
+
+            <!--  Top  -->
+            <BoxView
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Color="Transparent">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CerrarFotoOverlay" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!--  Left  -->
+            <BoxView
+                Grid.Row="1"
+                Grid.Column="0"
+                Color="Transparent">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CerrarFotoOverlay" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!--  Center: imagen (sin TapGestureRecognizer = no cierra)  -->
+            <Frame
+                Grid.Row="1"
+                Grid.Column="1"
+                Padding="8"
+                BackgroundColor="White"
+                CornerRadius="16"
+                HasShadow="True"
+                WidthRequest="310">
+                <Image
+                    x:Name="FotoPopupImage"
+                    Aspect="AspectFit"
+                    MaximumHeightRequest="460" />
+            </Frame>
+
+            <!--  Right  -->
+            <BoxView
+                Grid.Row="1"
+                Grid.Column="2"
+                Color="Transparent">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CerrarFotoOverlay" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <!--  Bottom  -->
+            <BoxView
+                Grid.Row="2"
+                Grid.ColumnSpan="3"
+                Color="Transparent">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CerrarFotoOverlay" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
