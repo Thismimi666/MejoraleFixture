@@ -67,6 +67,10 @@ public partial class PerfilPage : ContentPage
     // ⚠️ DAÑADA
     async void MarcarDanada(object sender, EventArgs e)
     {
+        var boton = sender as Button;
+        var fixture = boton?.BindingContext as FixtureItem;
+        if (fixture == null) return;
+
         bool aceptar = await DisplayAlert(
             "Fixture dañada",
             "Favor de dirigirse con el coordinador.\n\nSi la fixture está dañada se levantará un reporte de incidencia.",
@@ -74,27 +78,45 @@ public partial class PerfilPage : ContentPage
             "Cancelar");
 
         if (aceptar)
-        {
-            await Navigation.PushAsync(new DanosPage());
-        }
+            await Navigation.PushAsync(new DanosPage(fixture.Serial));
     }
 
     // ❌ PERDIDA
     async void MarcarPerdida(object sender, EventArgs e)
     {
+        var boton = sender as Button;
+        var fixture = boton?.BindingContext as FixtureItem;
+        if (fixture == null) return;
+
         bool confirmar = await DisplayAlert(
             "Confirmar pérdida",
-            "¿Seguro que esta fixture se ha perdido?",
+            $"¿Seguro que la fixture {fixture.Serial} se ha perdido?",
             "Sí",
             "No");
 
-        if (confirmar)
+        if (!confirmar) return;
+
+        // Registrar movimiento
+        await _db.RegistrarMovimientoAsync(new MovimientoFixture
         {
-            await DisplayAlert(
-                "Fixture perdida",
-                "La fixture ha sido marcada como perdida.",
-                "OK");
-        }
+            FixtureSerial = fixture.Serial,
+            Tipo = "Pérdida",
+            Usuario = SesionService.UsuarioActual?.Nombre ?? "Desconocido",
+            Observaciones = "Reportada como perdida desde perfil",
+            Fecha = DateTime.Now
+        });
+
+        // Actualizar estado en BD
+        fixture.Estado = "Baja";
+        fixture.Responsable = "Sin asignar";
+        await _db.GuardarAsync(fixture);
+
+        await DisplayAlert(
+            "Fixture perdida",
+            $"La fixture {fixture.Serial} ha sido marcada como baja.",
+            "OK");
+
+        await CargarFixturesAsync();
     }
 
     // 🔒 CERRAR SESION

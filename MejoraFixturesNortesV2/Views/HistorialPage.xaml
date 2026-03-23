@@ -164,6 +164,18 @@
                                                 Value="Devoluci&#xF3;n">
                                                 <Setter Property="BackgroundColor" Value="#2E7D32" />
                                             </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding Tipo}"
+                                                TargetType="Border"
+                                                Value="Da&#xF1;o">
+                                                <Setter Property="BackgroundColor" Value="#C62828" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding Tipo}"
+                                                TargetType="Border"
+                                                Value="P&#xE9;rdida">
+                                                <Setter Property="BackgroundColor" Value="#4A148C" />
+                                            </DataTrigger>
                                         </Border.Triggers>
                                         <Label
                                             FontAttributes="Bold"

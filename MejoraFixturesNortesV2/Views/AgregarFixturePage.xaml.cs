@@ -1,16 +1,18 @@
-﻿using MejoraFixturesNortesV2.Models;
-using MejoraFixturesNortesV2.Services;
+﻿using MejoraFixturesNortesV2.Data;
+using MejoraFixturesNortesV2.Models;
 
 namespace MejoraFixturesNortesV2.Views;
 
 public partial class AgregarFixturePage : ContentPage
 {
+    readonly FixtureDatabase _db = null!;
     string estadoSeleccionado = "Disponible";
     string rutaImagen = "";
 
     public AgregarFixturePage()
     {
         InitializeComponent();
+        _db = IPlatformApplication.Current!.Services.GetService<FixtureDatabase>()!;
     }
 
     private async void TomarFoto(object sender, EventArgs e)
@@ -77,14 +79,14 @@ public partial class AgregarFixturePage : ContentPage
 
         var nuevo = new FixtureItem
         {
-            Serial = txtCodigo.Text,
-            Proceso = txtProceso.Text,
-            Responsable = string.IsNullOrWhiteSpace(txtResponsable.Text) ? "Sin asignar" : txtResponsable.Text,
+            Serial = txtCodigo.Text.Trim(),
+            Proceso = txtProceso.Text.Trim(),
+            Responsable = string.IsNullOrWhiteSpace(txtResponsable.Text) ? "Sin asignar" : txtResponsable.Text.Trim(),
             Estado = estadoSeleccionado,
             Imagen = string.IsNullOrEmpty(rutaImagen) ? "fotofix.png" : rutaImagen
         };
 
-        DataService.Fixtures.Add(nuevo);
+        await _db.GuardarAsync(nuevo);
 
         await DisplayAlert("Éxito", "Fixture agregado correctamente", "OK");
 
