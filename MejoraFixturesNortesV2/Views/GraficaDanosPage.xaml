@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MejoraFixturesNortesV2.Views.GraficaDanosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+        <!--  HEADER  -->
+        <Grid
+            Grid.Row="0"
+            Padding="20,50,20,20"
+            BackgroundColor="#0D3B66"
+            ColumnDefinitions="Auto,*">
+
+            <Border
+                Grid.Column="0"
+                Padding="0,0,10,0"
+                BackgroundColor="Transparent"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VolverButton_Clicked" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4">
+                    <Label
+                        FontSize="28"
+                        Text="&#x2039;"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontSize="16"
+                        Text="Volver"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Label
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="&#x1F4CA; Gr&#xE1;fica de Da&#xF1;os"
+                TextColor="White"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+        <!--  FILTROS  -->
+        <ScrollView
+            Grid.Row="1"
+            Margin="15,14,15,0"
+            HorizontalScrollBarVisibility="Never"
+            Orientation="Horizontal">
+            <HorizontalStackLayout Spacing="10">
+
+                <Button
+                    x:Name="BtnGDanos"
+                    Padding="16,0"
+                    BackgroundColor="#C62828"
+                    Clicked="FiltroGrafica_Clicked"
+                    CornerRadius="20"
+                    FontSize="14"
+                    HeightRequest="38"
+                    Text="&#x1F534; Da&#xF1;os"
+                    TextColor="White" />
+
+                <Button
+                    x:Name="BtnGBajas"
+                    Padding="16,0"
+                    BackgroundColor="#E0E0E0"
+                    Clicked="FiltroGrafica_Clicked"
+                    CornerRadius="20"
+                    FontSize="14"
+                    HeightRequest="38"
+                    Text="&#x26AB; Bajas"
+                    TextColor="#444" />
+
+                <Button
+                    x:Name="BtnGAmbos"
+                    Padding="16,0"
+                    BackgroundColor="#E0E0E0"
+                    Clicked="FiltroGrafica_Clicked"
+                    CornerRadius="20"
+                    FontSize="14"
+                    HeightRequest="38"
+                    Text="&#x1F534;+&#x26AB; Da&#xF1;os + Bajas"
+                    TextColor="#444" />
+
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!--  RESUMEN MES ACTUAL  -->
+        <Frame
+            Grid.Row="2"
+            Margin="15,14,15,0"
+            Padding="16"
+            BackgroundColor="#F4F6F8"
+            BorderColor="Transparent"
+            CornerRadius="16">
+            <Grid ColumnDefinitions="*,*">
+                <VerticalStackLayout
+                    Grid.Column="0"
+                    HorizontalOptions="Center"
+                    Spacing="2">
+                    <Label
+                        x:Name="LblTotalMes"
+                        FontAttributes="Bold"
+                        FontSize="28"
+                        HorizontalOptions="Center"
+                        TextColor="#C62828" />
+                    <Label
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        Text="Este mes"
+                        TextColor="Gray" />
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    Spacing="2">
+                    <Label
+                        x:Name="LblTotalAnio"
+                        FontAttributes="Bold"
+                        FontSize="28"
+                        HorizontalOptions="Center"
+                        TextColor="#0D3B66" />
+                    <Label
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        Text="Este a&#xF1;o"
+                        TextColor="Gray" />
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <!--  GRÁFICA (barras horizontales generadas en code-behind)  -->
+        <ScrollView Grid.Row="3">
+            <VerticalStackLayout
+                x:Name="BarsContainer"
+                Padding="20,16"
+                Spacing="14" />
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>
