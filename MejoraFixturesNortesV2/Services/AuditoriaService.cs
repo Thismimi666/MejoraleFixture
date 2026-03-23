@@ -1,103 +1,41 @@
-﻿using System.Linq;
+﻿using MejoraFixturesNortesV2.Data;
 using MejoraFixturesNortesV2.Models;
 
 namespace MejoraFixturesNortesV2.Services;
 
 public class AuditoriaService
 {
-    // 🔥 LISTA GLOBAL COMPARTIDA
-    private static List<EventoAuditoria> eventos = new();
+    readonly FixtureDatabase _db = null!;
 
-    // 🔥 EVENTO PARA ACTUALIZAR UI
-    public static event Action EventosActualizados;
+    public static event Action? EventosActualizados;
 
     public AuditoriaService()
     {
-        // Evita duplicar datos demo
-        if (eventos.Count == 0)
-            CargarEventosDemo();
+        _db = IPlatformApplication.Current!.Services.GetService<FixtureDatabase>()!;
     }
 
-    void CargarEventosDemo()
+    public async Task<List<EventoAuditoria>> ObtenerEventosAsync()
+        => await _db.ObtenerEventosAsync();
+
+    public async Task<List<EventoAuditoria>> ObtenerEventosPorFechaAsync(DateTime fecha)
+        => await _db.ObtenerEventosPorFechaAsync(fecha);
+
+    public async Task CrearEventoAsync(EventoAuditoria evento)
     {
-        eventos.Add(new EventoAuditoria
-        {
-            Id = 1,
-            Fecha = new DateTime(2024, 5, 7),
-            Tipo = "Externa",
-            Titulo = "Copa de Calidad",
-            Descripcion = "Auditoría externa"
-        });
-
-        eventos.Add(new EventoAuditoria
-        {
-            Id = 2,
-            Fecha = new DateTime(2024, 5, 13),
-            Tipo = "Interna",
-            Titulo = "Auditoría Producción",
-            Descripcion = "Auditoría interna"
-        });
-
-        eventos.Add(new EventoAuditoria
-        {
-            Id = 3,
-            Fecha = new DateTime(2024, 5, 21),
-            Tipo = "Evento",
-            Titulo = "Delegación cliente",
-            Descripcion = "Visita técnica"
-        });
+        await _db.GuardarEventoAsync(evento);
+        EventosActualizados?.Invoke();
     }
 
-    // ✅ READ (todos)
-    public List<EventoAuditoria> ObtenerEventos()
+    public async Task ActualizarEventoAsync(EventoAuditoria evento)
     {
-        return eventos;
+        await _db.GuardarEventoAsync(evento);
+        EventosActualizados?.Invoke();
     }
 
-    // ✅ READ por fecha
-    public List<EventoAuditoria> ObtenerEventosPorFecha(DateTime fecha)
+    public async Task EliminarEventoAsync(int id)
     {
-        return eventos
-            .Where(e => e.Fecha.Date == fecha.Date)
-            .ToList();
+        await _db.EliminarEventoAsync(id);
+        EventosActualizados?.Invoke();
     }
 
-    // ✅ CREATE
-    public void CrearEvento(EventoAuditoria evento)
-    {
-        evento.Id = eventos.Count > 0 ? eventos.Max(e => e.Id) + 1 : 1;
-
-        eventos.Add(evento);
-
-        EventosActualizados?.Invoke(); // 🔥 refresca UI
-    }
-
-    // ✅ UPDATE
-    public void ActualizarEvento(EventoAuditoria evento)
-    {
-        var existente = eventos.FirstOrDefault(e => e.Id == evento.Id);
-
-        if (existente != null)
-        {
-            existente.Fecha = evento.Fecha;
-            existente.Tipo = evento.Tipo;
-            existente.Titulo = evento.Titulo;
-            existente.Descripcion = evento.Descripcion;
-
-            EventosActualizados?.Invoke(); // 🔥 refresca UI
-        }
-    }
-
-    // ✅ DELETE
-    public void EliminarEvento(int id)
-    {
-        var evento = eventos.FirstOrDefault(e => e.Id == id);
-
-        if (evento != null)
-        {
-            eventos.Remove(evento);
-
-            EventosActualizados?.Invoke(); // 🔥 refresca UI
-        }
-    }
 }

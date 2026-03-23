@@ -22,7 +22,7 @@ public partial class AgregarEventoPage : ContentPage
             Descripcion = ComentariosEntry.Text
         };
 
-        service.CrearEvento(evento);
+        await service.CrearEventoAsync(evento);
 
         await DisplayAlert("OK", "Guardado", "OK");
 

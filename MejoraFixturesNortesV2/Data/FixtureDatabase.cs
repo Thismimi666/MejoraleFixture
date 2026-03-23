@@ -28,6 +28,7 @@ namespace MejoraFixturesNortesV2.Data
             await _db.CreateTableAsync<FixtureItem>();
             await _db.CreateTableAsync<MovimientoFixture>();
             await _db.CreateTableAsync<Usuario>();
+            await _db.CreateTableAsync<EventoAuditoria>();
 
             // Seed Fixtures
             int countF = await _db.Table<FixtureItem>().CountAsync();
@@ -182,6 +183,35 @@ namespace MejoraFixturesNortesV2.Data
             return await _db.Table<FixtureItem>()
                             .Where(f => f.Estado == "En uso")
                             .ToListAsync();
+        }
+
+        // ── EVENTOS ───────────────────────────────────────────────
+
+        public async Task<List<EventoAuditoria>> ObtenerEventosAsync()
+        {
+            await InicializarAsync();
+            return await _db.Table<EventoAuditoria>().OrderBy(e => e.Fecha).ToListAsync();
+        }
+
+        public async Task<List<EventoAuditoria>> ObtenerEventosPorFechaAsync(DateTime fecha)
+        {
+            await InicializarAsync();
+            var todos = await _db.Table<EventoAuditoria>().ToListAsync();
+            return todos.Where(e => e.Fecha.Date == fecha.Date).ToList();
+        }
+
+        public async Task<int> GuardarEventoAsync(EventoAuditoria evento)
+        {
+            await InicializarAsync();
+            if (evento.Id != 0)
+                return await _db.UpdateAsync(evento);
+            return await _db.InsertAsync(evento);
+        }
+
+        public async Task<int> EliminarEventoAsync(int id)
+        {
+            await InicializarAsync();
+            return await _db.DeleteAsync(new EventoAuditoria { Id = id });
         }
     }
 }

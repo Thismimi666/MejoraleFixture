@@ -7,28 +7,35 @@ namespace MejoraFixturesNortesV2.Views;
 public partial class AuditoriasPage : ContentPage
 {
     DateTime mesActual = DateTime.Today;
+    DateTime? fechaSeleccionada;
 
-    AuditoriaService auditoriaService = new AuditoriaService();
+    AuditoriaService auditoriaService = new();
 
     List<EventoAuditoria> eventos = new();
 
     public AuditoriasPage()
     {
         InitializeComponent();
-
-        eventos = auditoriaService.ObtenerEventos();
-
-        // 🔥 SUSCRIPCIÓN AL EVENTO GLOBAL
         AuditoriaService.EventosActualizados += RecargarEventos;
-
-        GenerarCalendario();
     }
 
-    // 🔥 MÉTODO PARA RECARGAR AUTOMÁTICAMENTE
-    void RecargarEventos()
+    protected override async void OnAppearing()
     {
-        eventos = auditoriaService.ObtenerEventos();
+        base.OnAppearing();
+        await CargarEventosAsync();
+    }
+
+    async Task CargarEventosAsync()
+    {
+        eventos = await auditoriaService.ObtenerEventosAsync();
         GenerarCalendario();
+        if (fechaSeleccionada.HasValue)
+            MostrarEventos(fechaSeleccionada.Value);
+    }
+
+    async void RecargarEventos()
+    {
+        await CargarEventosAsync();
     }
 
     void GenerarCalendario()
@@ -74,7 +81,8 @@ public partial class AuditoriasPage : ContentPage
                 {
                     Text = dia.ToString(),
                     HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center
+                    VerticalOptions = LayoutOptions.Center,
+                    TextColor = Colors.Black
                 }
             };
 
@@ -84,12 +92,13 @@ public partial class AuditoriasPage : ContentPage
             if (evento != null)
             {
                 if (evento.Tipo == "Interna")
+                {
                     celda.BackgroundColor = Color.FromArgb("#1F4E8C");
-
-                if (evento.Tipo == "Externa")
+                    ((Label)celda.Content).TextColor = Colors.White;
+                }
+                else if (evento.Tipo == "Externa")
                     celda.BackgroundColor = Color.FromArgb("#F9A825");
-
-                if (evento.Tipo == "Evento")
+                else if (evento.Tipo == "Evento")
                     celda.BackgroundColor = Color.FromArgb("#BDBDBD");
             }
 
@@ -111,12 +120,13 @@ public partial class AuditoriasPage : ContentPage
 
     void MostrarEventos(DateTime fecha)
     {
+        fechaSeleccionada = fecha;
         EventosContainer.Children.Clear();
 
         FechaSeleccionadaLabel.Text =
             fecha.ToString("dddd dd MMMM yyyy", new CultureInfo("es-ES"));
 
-        var eventosDia = auditoriaService.ObtenerEventosPorFecha(fecha);
+        var eventosDia = eventos.Where(e => e.Fecha.Date == fecha.Date).ToList();
 
         if (eventosDia.Count == 0)
         {
@@ -149,6 +159,62 @@ public partial class AuditoriasPage : ContentPage
             if (ev.Tipo == "Evento")
                 color = Color.FromArgb("#6C757D");
 
+            var barraColor = new BoxView { BackgroundColor = color };
+            Grid.SetColumn(barraColor, 0);
+
+            var contenido = new VerticalStackLayout
+            {
+                Padding = 12,
+                Spacing = 5,
+                Children =
+                {
+                    new Label
+                    {
+                        Text = ev.Titulo,
+                        FontAttributes = FontAttributes.Bold,
+                        FontSize = 14,
+                        TextColor = Color.FromArgb("#0D3B66")
+                    },
+                    new Label
+                    {
+                        Text = ev.Tipo,
+                        FontSize = 12,
+                        TextColor = color
+                    },
+                    new Label
+                    {
+                        Text = ev.Descripcion,
+                        FontSize = 12,
+                        TextColor = Colors.Black
+                    },
+                    new Button
+                    {
+                        Text = "Eliminar",
+                        BackgroundColor = Colors.Red,
+                        TextColor = Colors.White,
+                        FontSize = 12,
+                        CornerRadius = 10,
+                        HorizontalOptions = LayoutOptions.End,
+                        Command = new Command(async () =>
+                        {
+                            await auditoriaService.EliminarEventoAsync(ev.Id);
+                        })
+                    }
+                }
+            };
+            Grid.SetColumn(contenido, 1);
+
+            var gridCard = new Grid
+            {
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = 6 },
+                    new ColumnDefinition { Width = GridLength.Star }
+                }
+            };
+            gridCard.Add(barraColor);
+            gridCard.Add(contenido);
+
             Frame card = new Frame
             {
                 CornerRadius = 16,
@@ -156,70 +222,7 @@ public partial class AuditoriasPage : ContentPage
                 HasShadow = true,
                 BackgroundColor = Colors.White,
                 Margin = new Thickness(0, 5),
-
-                Content = new Grid
-                {
-                    ColumnDefinitions =
-                {
-                    new ColumnDefinition { Width = 6 },
-                    new ColumnDefinition { Width = GridLength.Star }
-                },
-
-                    Children =
-                {
-                    // 🔵 Barra lateral de color
-                    new BoxView
-                    {
-                        BackgroundColor = color
-                    },
-
-                    // 📄 Contenido
-                    new VerticalStackLayout
-                    {
-                        Padding = 12,
-                        Spacing = 5,
-                        Children =
-                        {
-                            new Label
-                            {
-                                Text = ev.Titulo,
-                                FontAttributes = FontAttributes.Bold,
-                                FontSize = 14,
-                                TextColor = Color.FromArgb("#0D3B66")
-                            },
-
-                            new Label
-                            {
-                                Text = ev.Tipo,
-                                FontSize = 12,
-                                TextColor = color
-                            },
-
-                            new Label
-                            {
-                                Text = ev.Descripcion,
-                                FontSize = 12,
-                                TextColor = Colors.Gray
-                            },
-
-                            // 🔥 BOTÓN ELIMINAR
-                            new Button
-                            {
-                                Text = "Eliminar",
-                                BackgroundColor = Colors.Red,
-                                TextColor = Colors.White,
-                                FontSize = 12,
-                                CornerRadius = 10,
-                                HorizontalOptions = LayoutOptions.End,
-                                Command = new Command(() =>
-                                {
-                                    auditoriaService.EliminarEvento(ev.Id);
-                                })
-                            }
-                        }
-                    }
-                }
-                }
+                Content = gridCard
             };
 
             EventosContainer.Children.Add(card);
@@ -247,6 +250,7 @@ public partial class AuditoriasPage : ContentPage
 
         mesActual = mesActual.AddMonths(direccion);
 
+        eventos = await auditoriaService.ObtenerEventosAsync();
         GenerarCalendario();
 
         CalendarioGrid.TranslationX = direccion == 1 ? ancho : -ancho;

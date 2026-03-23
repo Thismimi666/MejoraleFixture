@@ -1,7 +1,11 @@
-﻿namespace MejoraFixturesNortesV2.Models;
+﻿using SQLite;
 
+namespace MejoraFixturesNortesV2.Models;
+
+[Table("Eventos")]
 public class EventoAuditoria
 {
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
     public DateTime Fecha { get; set; }
